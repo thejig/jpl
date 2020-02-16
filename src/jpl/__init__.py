@@ -21,10 +21,11 @@ class JiggyRule(object):
 class JiggyPlaybookLint(object):
     """Runner for jpl."""
 
-    def __init__(self, path: str, ruleset: list):
+    def __init__(self, path: str, ruleset: list, verbose=None):
         self.playbook = self._read(path)
         self.rules = ruleset
         self.resp = []
+        self.verbose = verbose
 
     def run(self):
         linted = []
@@ -43,7 +44,7 @@ class JiggyPlaybookLint(object):
             """
         )
 
-        return self._parse_linted(linted=linted, verbose=True)
+        return self._parse_linted(linted=linted, verbose=self.verbose)
 
     @staticmethod
     def _parse_linted(linted: list, verbose=None):
