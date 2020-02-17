@@ -6,16 +6,16 @@ from jpl.rules.jiggyrule import JiggyRule
 from jpl.utils.path import file_exists
 
 
-class ExtendedEnum(Enum):
+class ExtendedEnum(Enum):  # pragma no cover
     """Enum for Jiggy.Runner types."""
 
     @classmethod
-    def list(cls):
+    def list(cls):  # pragma no cover
         """List ExtendedEnum for runner types."""
         return list(map(lambda c: c.value, cls))
 
 
-class Runner(ExtendedEnum):
+class Runner(ExtendedEnum):  # pragma no cover
     """Runner Objects"""
 
     PARALLEL_RUNNER = "parallel"
@@ -79,26 +79,26 @@ class SecretsHasMetadata(JiggyRule):
     mark = "PASSED"
     message = ""
 
-    def validate_runner_supported(self, playbook: dict):
+    def validate_secrets(self, playbook: dict):
         """Check `secrets` metadata if exists for mandatory fields."""
-        MANDATORY_KEYS = ["location", "source"]
-
         pipeline = playbook.get("pipeline", {})
         secrets = pipeline.get("secrets")
 
         if secrets:
             if not isinstance(secrets, dict):
-                self.message = "Invalid `secrets` declaration."
                 self.mark = "FAILED"
-            else:
-                if not all(key in secrets.keys() for key in MANDATORY_KEYS):
-                    self.message = "Secrets requires both `location` and `source`."
-                    self.mark = "FAILED"
+                self.message = "Invalid `secrets` declaration."
+            elif "location" not in secrets.keys():
+                self.mark = "FAILED"
+                self.message = "Secrets requires attribute `location`."
+            elif "source" not in secrets.keys():
+                self.mark = "FAILED"
+                self.message = "Secrets requires attribute `source`."
 
         return self.mark
 
     def run(self, playbook):
-        return self.validate_runner_supported(playbook)
+        return self.validate_secrets(playbook)
 
 
 class SecretsLocationExists(JiggyRule):
@@ -120,10 +120,10 @@ class SecretsLocationExists(JiggyRule):
         if secrets_loc:
             _exists = file_exists(secrets_loc)
             if not _exists:
+                self.mark = "FAILED"
                 self.message = "Declared path to secrets: `{}` does not exist.".format(
                     secrets_loc
                 )
-                self.mark = "FAILED"
 
         return self.mark
 

@@ -1,8 +1,6 @@
 """Test module for jpl/rules/task/function."""
 import pytest
 
-from unittest import TestCase
-
 from jpl.rules.task.function import (
     FunctionSourceExists,
     ParamHasType,

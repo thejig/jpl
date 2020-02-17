@@ -34,7 +34,7 @@ class PlaybookHasName(JiggyRule):
     message = ""
 
     def has_name(self, playbook):
-        if not playbook.get("name"):
+        if not playbook.get("name", "").strip():
             self.mark = "FAILED"
             self.message = "Playbook `name` has not been declared."
 
