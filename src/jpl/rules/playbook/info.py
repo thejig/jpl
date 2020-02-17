@@ -1,10 +1,11 @@
+"""JiggyPlaybook rules."""
 from src.jpl.rules.jiggyrule import JiggyRule
 
 
 class PlaybookHasName(JiggyRule):
     """Validate `JiggyPlaybook` has attribute `name`"""
 
-    rule = "001"
+    rule = "I01"
     description = "Validate `JiggyPlaybook` has attribute `name`"
     priority = "high"
     commands = ["command", "core"]
@@ -26,7 +27,7 @@ class PlaybookHasName(JiggyRule):
 class PlaybookHasAuthor(JiggyRule):
     """Validate `JiggyPlaybook` has attribute `author`"""
 
-    rule = "002"
+    rule = "I02"
     description = "Validate `JiggyPlaybook` has attribute `author`"
     priority = "medium"
     commands = ["command", "core"]
@@ -48,7 +49,7 @@ class PlaybookHasAuthor(JiggyRule):
 class PlaybookHasDescription(JiggyRule):
     """Validate `JiggyPlaybook` has attribute `author`"""
 
-    rule = "003"
+    rule = "I03"
     description = "Validate `JiggyPlaybook` has attribute `description`"
     priority = "medium"
     commands = ["command", "core"]
@@ -72,7 +73,7 @@ class PlaybookHasDescription(JiggyRule):
 class PlaybookHasVersion(JiggyRule):
     """Validate `JiggyPlaybook` has attribute `author`"""
 
-    rule = "004"
+    rule = "I04"
     description = "Validate `JiggyPlaybook` has attribute `version`"
     priority = "medium"
     commands = ["command", "core"]

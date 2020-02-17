@@ -18,7 +18,7 @@ pipeline:
       output: null
     requires: null
 
-  - name: print-somethin-2
+  - name:
     description: Print something
     function:
       source: examples.utils.string_manipulation.PrintThis
@@ -30,7 +30,6 @@ pipeline:
       - print-somethin-3
 
   - name: print-somethin-3
-    description: Print something
     function:
       source: examples.utils.string_manipulation.PrintThis
       params:
@@ -51,7 +50,6 @@ pipeline:
       - print-somethin-2
 
   - name: get-first-letter
-    description: Gets today's weekday letter
     function:
       source: examples.utils.dates.GetFirstLetter
       params:
@@ -68,13 +66,4 @@ pipeline:
 
   - name: get-weekday
     description: Gets today's weekday
-    function:
-      source: examples.utils.dates.GetWeekdayTask
-      params:
-      - type: datetime.datetime
-        value: today-date
-        dependency: get-current-date
-      output:
-        id: weekday
-        type: str
     requires: null

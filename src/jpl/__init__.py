@@ -2,37 +2,36 @@
 import yaml
 
 from src.jpl.rules import rules
-
-
-class JiggyRule(object):
-    """Base class for JiggyRule."""
-
-    def __repr__(self):
-        return "<JiggyRule: {}>".format(self.rule)
-
-    def __verbose__(self):
-        return "<JiggyRule: {} - {}>".format(self.rule, self.desc)
-
-    def run(self, playbook):
-        """Baseclass runner."""
-        raise NotImplementedError()
+from src.jpl.rules import task_rules
 
 
 class JiggyPlaybookLint(object):
     """Runner for jpl."""
 
-    def __init__(self, path: str, ruleset: list, verbose=None):
+    def __init__(self, path: str, skip=None, drop_passed=None, verbose=None):
         self.playbook = self._read(path)
-        self.rules = ruleset
-        self.resp = []
+        self.skip = skip
+        self.drop_passed = drop_passed
         self.verbose = verbose
 
     def run(self):
         linted = []
-        for rule in self.rules:
-            _status = rule().run(playbook=self.playbook)
+        for rule in rules:
+            init_rule = rule()
 
-            linted.append((_status, rule))
+            _status = init_rule.run(playbook=self.playbook)
+
+            linted.append((_status, init_rule, None))
+
+        for task in self.playbook.get("pipeline", {}).get("tasks"):
+            for rule in task_rules:
+                init_rule = rule()
+
+                _status = init_rule.run(playbook=task)
+                linted.append((_status, init_rule, task.get("name")))
+
+        if self.drop_passed:
+            linted = [rule for rule in linted if rule[0] != "PASSED"]
 
         print(
             """
@@ -53,21 +52,19 @@ class JiggyPlaybookLint(object):
         :param linted:
         :return:
         """
-        for mark, rule in linted:
-            rule_meta = "[{}] {}:".format(rule.rule, rule.__name__)
+        for mark, rule, task_name in linted:
+            rule_meta = "[{}] {}:".format(rule.rule, rule.__class__.__name__)
+            if task_name:
+                rule_meta = "[{}] {} - {}:".format(
+                    rule.rule, rule.__class__.__name__, task_name
+                )
+
             if verbose:
-                print("{:<30}{:<10} {}".format(rule_meta, mark, rule.message))
+                print("{:<50}{:<10} {}".format(rule_meta, mark, rule.message))
             else:
-                print("{:<30}{:<30}".format(rule_meta, mark))
+                print("{:<50}{:<50}".format(rule_meta, mark))
 
-        return "Finished"
-
-    @staticmethod
-    def _pf(mark: bool):
-        if mark:
-            return "PASSED"
-        else:
-            return "FAILED"
+        return "Done !!"
 
     @staticmethod
     def _read(path: str):
