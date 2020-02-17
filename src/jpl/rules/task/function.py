@@ -15,8 +15,8 @@ class FunctionSourceExists(JiggyRule):
     message = ""
 
     def function_exists(self, task):
-        function = task.get("function", {})
-        function_loc = function.get("source")
+        this_func = task.get("function", {})
+        function_loc = this_func.get("source")
         if function_loc:
             _exists = module_exists(function_loc)
             if not _exists:

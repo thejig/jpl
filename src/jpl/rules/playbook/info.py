@@ -12,13 +12,12 @@ class PlaybookHasName(JiggyRule):
     mark = "PASSED"
     message = ""
 
-    @staticmethod
-    def has_name(playbook):
+    def has_name(self, playbook):
         if not playbook.get("name"):
-            PlaybookHasName.mark = "FAILED"
-            PlaybookHasName.message = "Playbook `name` has not been declared."
+            self.mark = "FAILED"
+            self.message = "Playbook `name` has not been declared."
 
-        return PlaybookHasName.mark
+        return self.mark
 
     def run(self, playbook):
         return self.has_name(playbook)
@@ -34,13 +33,12 @@ class PlaybookHasAuthor(JiggyRule):
     mark = "PASSED"
     message = ""
 
-    @staticmethod
-    def has_author(playbook):
+    def has_author(self, playbook):
         if not playbook.get("author"):
-            PlaybookHasAuthor.mark = "WARNING"
-            PlaybookHasAuthor.message = "Playbook `author` has not been declared."
+            self.mark = "WARNING"
+            self.message = "Playbook `author` has not been declared."
 
-        return PlaybookHasAuthor.mark
+        return self.mark
 
     def run(self, playbook):
         return self.has_author(playbook)
@@ -56,15 +54,14 @@ class PlaybookHasDescription(JiggyRule):
     mark = "PASSED"
     message = ""
 
-    @staticmethod
-    def has_desc(playbook):
+    def has_desc(self, playbook):
         if not playbook.get("description"):
-            PlaybookHasDescription.mark = "WARNING"
-            PlaybookHasDescription.message = (
+            self.mark = "WARNING"
+            self.message = (
                 "Playbook `description` has not been declared."
             )
 
-        return PlaybookHasDescription.mark
+        return self.mark
 
     def run(self, playbook):
         return self.has_desc(playbook)
@@ -80,13 +77,12 @@ class PlaybookHasVersion(JiggyRule):
     mark = "PASSED"
     message = ""
 
-    @staticmethod
-    def has_version(playbook):
+    def has_version(self, playbook):
         if not playbook.get("version"):
-            PlaybookHasVersion.mark = "WARNING"
-            PlaybookHasVersion.message = "Playbook `version` has not been declared."
+            self.mark = "WARNING"
+            self.message = "Playbook `version` has not been declared."
 
-        return PlaybookHasVersion.mark
+        return self.mark
 
     def run(self, playbook):
         return self.has_version(playbook)
