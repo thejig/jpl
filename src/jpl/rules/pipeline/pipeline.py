@@ -57,13 +57,11 @@ class RunnerIsSupported(JiggyRule):
 
     def validate_runner_supported(self, playbook):
         pipeline = playbook.get("pipeline", {})
-        runner = pipeline.get("runner")
+        runner = pipeline.get("runner", "")
 
         if not runner.lower() in [jr.value for jr in Runner]:
             self.mark = "FAILED"
-            self.message = "Declared Runner: `{}` is not supported.".format(
-                runner
-            )
+            self.message = "Declared Runner: `{}` is not supported.".format(runner)
 
         return self.mark
 
@@ -122,10 +120,8 @@ class SecretsLocationExists(JiggyRule):
         if secrets_loc:
             _exists = file_exists(secrets_loc)
             if not _exists:
-                self.message = (
-                    "Declared path to secrets: `{}` does not exist.".format(
-                        secrets_loc
-                    )
+                self.message = "Declared path to secrets: `{}` does not exist.".format(
+                    secrets_loc
                 )
                 self.mark = "FAILED"
 

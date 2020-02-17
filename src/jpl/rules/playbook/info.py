@@ -2,6 +2,27 @@
 from src.jpl.rules.jiggyrule import JiggyRule
 
 
+class PlayBookExists(JiggyRule):
+    """Validate `JiggyPlaybook` exists."""
+
+    rule = "001"
+    description = "Validate `JiggyPlaybook` exists."
+    priority = "high"
+    commands = ["command", "core"]
+    mark = "PASSED"
+    message = ""
+
+    def exists(self, playbook):
+        if not playbook:
+            self.mark = "FAILED"
+            self.message = "Jiggy Playbook is empty!"
+
+        return self.mark
+
+    def run(self, playbook):
+        return self.exists(playbook)
+
+
 class PlaybookHasName(JiggyRule):
     """Validate `JiggyPlaybook` has attribute `name`"""
 
@@ -57,9 +78,7 @@ class PlaybookHasDescription(JiggyRule):
     def has_desc(self, playbook):
         if not playbook.get("description"):
             self.mark = "WARNING"
-            self.message = (
-                "Playbook `description` has not been declared."
-            )
+            self.message = "Playbook `description` has not been declared."
 
         return self.mark
 

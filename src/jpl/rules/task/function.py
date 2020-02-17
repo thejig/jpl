@@ -21,10 +21,8 @@ class FunctionSourceExists(JiggyRule):
             _exists = module_exists(function_loc)
             if not _exists:
                 self.mark = "FAILED"
-                self.message = (
-                    "Declared path to function: `{}` does not exist.".format(
-                        function_loc
-                    )
+                self.message = "Declared path to function: `{}` does not exist.".format(
+                    function_loc
                 )
 
         return self.mark
@@ -33,6 +31,4 @@ class FunctionSourceExists(JiggyRule):
         return self.function_exists(playbook)
 
 
-rules = [
-    FunctionSourceExists
-]
+rules = [FunctionSourceExists]

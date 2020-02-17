@@ -1,6 +1,6 @@
 from itertools import chain
 
-from src.jpl.rules.playbook import info
+from src.jpl.rules.playbook import info, PlayBookExists
 from src.jpl.rules.pipeline import pipeline
 from src.jpl.rules.task import function, task
 

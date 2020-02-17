@@ -1,8 +1,7 @@
 """Jiggy Rule."""
 import yaml
 
-from src.jpl.rules import rules
-from src.jpl.rules import task_rules
+from src.jpl.rules import PlayBookExists, rules, task_rules
 
 
 class JiggyPlaybookLint(object):
@@ -15,6 +14,25 @@ class JiggyPlaybookLint(object):
         self.verbose = verbose
 
     def run(self):
+        """Runner for JiggyPlaybookLinter."""
+        print(
+            """
+   __        ______      __        
+  /\ \      /\  == \    /\ \       
+ _\_\ \     \ \  _-/    \ \ \____  
+/\_____\     \ \_\       \ \_____\ 
+\/_____/iggy  \/_/laybook \/_____/inter            
+            """
+        )
+
+        pbe = PlayBookExists()
+        exists = pbe.run(self.playbook)
+        if exists == "FAILED":
+            return self._parse_linted(
+                [(exists, pbe, None)],
+                verbose=self.verbose
+            )
+
         linted = []
         for rule in rules:
             init_rule = rule()
@@ -32,16 +50,6 @@ class JiggyPlaybookLint(object):
 
         if self.drop_passed:
             linted = [rule for rule in linted if rule[0] != "PASSED"]
-
-        print(
-            """
-   __        ______      __        
-  /\ \      /\  == \    /\ \       
- _\_\ \     \ \  _-/    \ \ \____  
-/\_____\     \ \_\       \ \_____\ 
-\/_____/iggy  \/_/laybook \/_____/inter            
-            """
-        )
 
         return self._parse_linted(linted=linted, verbose=self.verbose)
 
