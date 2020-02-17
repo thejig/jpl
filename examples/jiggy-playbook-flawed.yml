@@ -13,7 +13,7 @@ pipeline:
     function:
       source: examples.utils.string_manipulation.PrintThis
       params:
-      - type: str
+      - type:
         value: 'THIS PIPELINE IS BONKERS'
       output: null
     requires: null

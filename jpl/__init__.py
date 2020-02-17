@@ -4,7 +4,7 @@ import yaml
 from jpl.rules import PlayBookExists, rules, task_rules
 
 
-class JiggyPlaybookLint(object):
+class JiggyPlaybookLint(object):  # pragma no cover
     """Runner for jpl."""
 
     def __init__(self, path: str, skip=None, drop_passed=None, verbose=None):
@@ -28,10 +28,7 @@ class JiggyPlaybookLint(object):
         pbe = PlayBookExists()
         exists = pbe.run(self.playbook)
         if exists == "FAILED":
-            return self._parse_linted(
-                [(exists, pbe, None)],
-                verbose=self.verbose
-            )
+            return self._parse_linted([(exists, pbe, None)], verbose=self.verbose)
 
         linted = []
         for rule in rules:
@@ -54,7 +51,7 @@ class JiggyPlaybookLint(object):
         return self._parse_linted(linted=linted, verbose=self.verbose)
 
     @staticmethod
-    def _parse_linted(linted: list, verbose=None):
+    def _parse_linted(linted: list, verbose=None):  # pragma no cover
         """
         Parse rule responses to generate response object
         :param linted:
@@ -75,7 +72,7 @@ class JiggyPlaybookLint(object):
         return "Done !!"
 
     @staticmethod
-    def _read(path: str):
+    def _read(path: str):  # pragma no cover
         """Reader of .yml file."""
         with open(path, "r") as f:
             return yaml.full_load(f)
