@@ -1,7 +1,7 @@
 """JiggyPlaybook.pipeline.tasks rules."""
-from src.jpl.rules.jiggyrule import JiggyRule
+from jpl.rules.jiggyrule import JiggyRule
 
-from src.jpl.utils.path import module_exists
+from jpl.utils.path import module_exists
 
 
 class FunctionSourceExists(JiggyRule):

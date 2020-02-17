@@ -1,5 +1,5 @@
 """JiggyPlaybook rules."""
-from src.jpl.rules.jiggyrule import JiggyRule
+from jpl.rules.jiggyrule import JiggyRule
 
 
 class PlayBookExists(JiggyRule):

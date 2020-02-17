@@ -1,9 +1,9 @@
 """JiggyPlaybook Pipeline rules."""
 from enum import Enum
 
-from src.jpl.rules.jiggyrule import JiggyRule
+from jpl.rules.jiggyrule import JiggyRule
 
-from src.jpl.utils.path import file_exists
+from jpl.utils.path import file_exists
 
 
 class ExtendedEnum(Enum):

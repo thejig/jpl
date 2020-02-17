@@ -1,5 +1,5 @@
 """JiggyPlaybook.pipeline.tasks rules."""
-from src.jpl.rules.jiggyrule import JiggyRule
+from jpl.rules.jiggyrule import JiggyRule
 
 
 class TaskHasName(JiggyRule):

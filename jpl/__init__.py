@@ -1,7 +1,7 @@
 """Jiggy Rule."""
 import yaml
 
-from src.jpl.rules import PlayBookExists, rules, task_rules
+from jpl.rules import PlayBookExists, rules, task_rules
 
 
 class JiggyPlaybookLint(object):
