@@ -128,16 +128,22 @@ pipeline:
 
 ## Rules
 ### Etymology:
-JiggyRule - JiggyRule.rule consists of 3 characters (i.e.) X01
+`JiggyRule` - JiggyRule.rule consists of 3 characters (i.e.) `X01`
+
 
 X: (char) - letter describes corresponding ruleset
+
 0: (digit) - incrementing based on third digit
+
 0: (digit) - incrementing
 
-(i.e.) Playbook INFO Ruleset
 
-Rule 1. PlaybookHasName
+Examples:
+
+Rule: `PlaybookHasName`
+
 rule.rule = I (info) 0 (base 10) 1 (rule number 1)
 
-Rule 2. PipelineHasDescription
+Rule: `PipelineHasDescription`
+
 rule.rule = P (pipeline) 0 (base 10) 1 (rule number 1)
