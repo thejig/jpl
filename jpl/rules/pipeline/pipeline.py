@@ -16,7 +16,7 @@ class ExtendedEnum(Enum):  # pragma no cover
 
 
 class Runner(ExtendedEnum):  # pragma no cover
-    """Runner Objects"""
+    """Runner types supported by Jiggy."""
 
     PARALLEL_RUNNER = "parallel"
     SEQUENTIAL_RUNNER = "sequential"
@@ -32,7 +32,7 @@ class PipelineHasRunner(JiggyRule):
     mark = "PASSED"
     message = ""
 
-    def validate_runner(self, playbook):
+    def validate_runner(self, playbook: dict) -> str:
         pipeline = playbook.get("pipeline", {})
 
         if not pipeline.get("runner"):
@@ -41,7 +41,7 @@ class PipelineHasRunner(JiggyRule):
 
         return self.mark
 
-    def run(self, playbook):
+    def run(self, playbook: dict) -> str:
         return self.validate_runner(playbook)
 
 
@@ -55,7 +55,7 @@ class RunnerIsSupported(JiggyRule):
     mark = "PASSED"
     message = ""
 
-    def validate_runner_supported(self, playbook):
+    def validate_runner_supported(self, playbook: dict) -> str:
         pipeline = playbook.get("pipeline", {})
         runner = pipeline.get("runner", "")
 
@@ -65,7 +65,7 @@ class RunnerIsSupported(JiggyRule):
 
         return self.mark
 
-    def run(self, playbook):
+    def run(self, playbook: dict) -> str:
         return self.validate_runner_supported(playbook)
 
 
@@ -79,7 +79,7 @@ class SecretsHasMetadata(JiggyRule):
     mark = "PASSED"
     message = ""
 
-    def validate_secrets(self, playbook: dict):
+    def validate_secrets(self, playbook: dict) -> str:
         """Check `secrets` metadata if exists for mandatory fields."""
         pipeline = playbook.get("pipeline", {})
         secrets = pipeline.get("secrets")
@@ -97,7 +97,7 @@ class SecretsHasMetadata(JiggyRule):
 
         return self.mark
 
-    def run(self, playbook):
+    def run(self, playbook: dict) -> str:
         return self.validate_secrets(playbook)
 
 
@@ -111,7 +111,7 @@ class SecretsLocationExists(JiggyRule):
     mark = "PASSED"
     message = ""
 
-    def validate_secrets_exists(self, playbook: dict):
+    def validate_secrets_exists(self, playbook: dict) -> str:
         """Check `secrets.location` exists."""
         pipeline = playbook.get("pipeline", {})
         secrets = pipeline.get("secrets", {})
@@ -127,7 +127,7 @@ class SecretsLocationExists(JiggyRule):
 
         return self.mark
 
-    def run(self, playbook):
+    def run(self, playbook: dict) -> str:
         return self.validate_secrets_exists(playbook)
 
 
@@ -141,7 +141,7 @@ class PipelineHasTasks(JiggyRule):
     mark = "PASSED"
     message = ""
 
-    def validate_pipeline_has_tasks(self, playbook: dict):
+    def validate_pipeline_has_tasks(self, playbook: dict) -> str:
         """Check `JiggyPlaybook.pipeline.tasks` exists."""
         pipeline = playbook.get("pipeline", {})
         tasks = pipeline.get("tasks")
@@ -152,7 +152,7 @@ class PipelineHasTasks(JiggyRule):
 
         return self.mark
 
-    def run(self, playbook):
+    def run(self, playbook: dict) -> str:
         return self.validate_pipeline_has_tasks(playbook)
 
 

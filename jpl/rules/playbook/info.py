@@ -12,14 +12,14 @@ class PlayBookExists(JiggyRule):
     mark = "PASSED"
     message = ""
 
-    def exists(self, playbook):
+    def exists(self, playbook: dict) -> str:
         if not playbook:
             self.mark = "FAILED"
             self.message = "Jiggy Playbook is empty!"
 
         return self.mark
 
-    def run(self, playbook):
+    def run(self, playbook: dict) -> str:
         return self.exists(playbook)
 
 
@@ -33,14 +33,14 @@ class PlaybookHasName(JiggyRule):
     mark = "PASSED"
     message = ""
 
-    def has_name(self, playbook):
+    def has_name(self, playbook: dict) -> str:
         if not playbook.get("name", "").strip():
             self.mark = "FAILED"
             self.message = "Playbook `name` has not been declared."
 
         return self.mark
 
-    def run(self, playbook):
+    def run(self, playbook: dict) -> str:
         return self.has_name(playbook)
 
 
@@ -54,14 +54,14 @@ class PlaybookHasAuthor(JiggyRule):
     mark = "PASSED"
     message = ""
 
-    def has_author(self, playbook):
+    def has_author(self, playbook: dict) -> str:
         if not playbook.get("author"):
             self.mark = "WARNING"
             self.message = "Playbook `author` has not been declared."
 
         return self.mark
 
-    def run(self, playbook):
+    def run(self, playbook: dict) -> str:
         return self.has_author(playbook)
 
 
@@ -75,14 +75,14 @@ class PlaybookHasDescription(JiggyRule):
     mark = "PASSED"
     message = ""
 
-    def has_desc(self, playbook):
+    def has_desc(self, playbook: dict) -> str:
         if not playbook.get("description"):
             self.mark = "WARNING"
             self.message = "Playbook `description` has not been declared."
 
         return self.mark
 
-    def run(self, playbook):
+    def run(self, playbook: dict) -> str:
         return self.has_desc(playbook)
 
 
@@ -96,14 +96,14 @@ class PlaybookHasVersion(JiggyRule):
     mark = "PASSED"
     message = ""
 
-    def has_version(self, playbook):
+    def has_version(self, playbook: dict) -> str:
         if not playbook.get("version"):
             self.mark = "WARNING"
             self.message = "Playbook `version` has not been declared."
 
         return self.mark
 
-    def run(self, playbook):
+    def run(self, playbook: dict) -> str:
         return self.has_version(playbook)
 
 

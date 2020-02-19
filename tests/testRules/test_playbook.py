@@ -5,7 +5,8 @@ from jpl.rules.playbook.info import (
     PlaybookHasName,
     PlaybookHasAuthor,
     PlaybookHasDescription,
-    PlaybookHasVersion
+    PlaybookHasVersion,
+    PlayBookExists
 )
 
 from tests.test_utils import load_from_json
@@ -59,6 +60,11 @@ class MockPlaybook:
     @property
     def version_missing(self):
         self.data.pop("version")
+        return self.data
+
+    @property
+    def playbook_absent(self):
+        self.data = None
         return self.data
 
 
@@ -123,6 +129,22 @@ def test_playbook_has_desc(playbook, expected):
 )
 def test_playbook_has_version(playbook, expected):
     rule = PlaybookHasVersion()
+    result = rule.run(
+        playbook=playbook
+    )
+
+    assert result == expected
+
+
+@pytest.mark.parametrize(
+    "playbook, expected",
+    [
+        (MockPlaybook().passing, "PASSED"),
+        (MockPlaybook().playbook_absent, "FAILED"),
+    ]
+)
+def test_playbook_exists(playbook, expected):
+    rule = PlayBookExists()
     result = rule.run(
         playbook=playbook
     )

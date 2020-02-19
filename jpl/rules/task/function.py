@@ -14,7 +14,7 @@ class FunctionSourceExists(JiggyRule):
     mark = "PASSED"
     message = ""
 
-    def function_exists(self, task):
+    def function_exists(self, task: dict) -> str:
         this_func = task.get("function", {})
         function_loc = this_func.get("source")
         if function_loc:
@@ -33,7 +33,7 @@ class FunctionSourceExists(JiggyRule):
 
         return self.mark
 
-    def run(self, playbook):
+    def run(self, playbook: dict) -> str:
         return self.function_exists(playbook)
 
 
@@ -47,7 +47,7 @@ class ParamHasType(JiggyRule):
     mark = "PASSED"
     message = ""
 
-    def param_has_attr_type(self, task):
+    def param_has_attr_type(self, task: dict) -> str:
         """Validate functino.params has `type` if exists."""
         this_func = task.get("function", {})
         params = this_func.get("params", [])
@@ -63,7 +63,7 @@ class ParamHasType(JiggyRule):
 
         return self.mark
 
-    def run(self, playbook):
+    def run(self, playbook: dict) -> str:
         return self.param_has_attr_type(playbook)
 
 
@@ -77,7 +77,7 @@ class ParamHasValue(JiggyRule):
     mark = "PASSED"
     message = ""
 
-    def param_has_attr_value(self, task):
+    def param_has_attr_value(self, task: dict) -> str:
         """Validate functino.params has `value` if exists."""
         this_func = task.get("function", {})
         params = this_func.get("params", [])
@@ -93,7 +93,7 @@ class ParamHasValue(JiggyRule):
 
         return self.mark
 
-    def run(self, playbook):
+    def run(self, playbook: dict) -> str:
         return self.param_has_attr_value(playbook)
 
 
@@ -107,7 +107,7 @@ class FunctionOutputIsSingular(JiggyRule):
     mark = "PASSED"
     message = ""
 
-    def validate_func_has_value(self, task):
+    def validate_func_has_value(self, task: dict) -> str:
         """Validate functino.params has type and value if exists."""
         this_func = task.get("function", {})
         output = this_func.get("output")
@@ -122,7 +122,7 @@ class FunctionOutputIsSingular(JiggyRule):
 
         return self.mark
 
-    def run(self, playbook):
+    def run(self, playbook: dict) -> str:
         return self.validate_func_has_value(playbook)
 
 
