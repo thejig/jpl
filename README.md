@@ -1,4 +1,4 @@
-# <p align="center"> jpl - JiggyPlaybookLinter </p>
+# <p align="center"> JiggyPlaybookLinter </p>
 
 <p align="center">
 <a href="https://travis-ci.com/thejig/jpl"><img alt="Build Status" src="https://travis-ci.com/thejig/jpl.svg?branch=master"></a>
@@ -103,7 +103,7 @@ A `JiggyPlaybook` is broken down into chunks
 
 ```yaml
 name: Hello, world!
-author: me@jigg.dev
+author: me@jiggy.dev
 description: Show off the usage of jpl
 version: 0.0.1
 
@@ -114,7 +114,7 @@ pipeline:
     source: jiggy.EnvSecrets
   tasks:
 
-  - name: print-somethin
+  - name: print-something
     description: Print something
     function:
       source: examples.utils.string_manipulation.PrintThis
