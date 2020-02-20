@@ -56,8 +56,8 @@ Options:
 
 A minimal test case
 ```bash
-$ jpl -v -p ecamples/jiggy-playbook.yml
-
+$ jpl -v -p examples/jiggy-playbook.yml
+   __        ______      __
   /\ \      /\  == \    /\ \
  _\_\ \     \ \  _-/    \ \ \____
 /\_____\     \ \_\       \ \_____\

@@ -1,7 +1,5 @@
-from jpl import JiggyPlaybookLint
-
+import jpl
 
 if __name__ == "__main__":
-    linter = JiggyPlaybookLint(
-        path="examples/jiggy-playbook-flawed.yml", verbose=True, drop_passed=True
-    ).run()
+    client = jpl.JiggyPlaybookLint(path="examples/jiggy-playbook-flawed.yml")
+    result = client.run()
