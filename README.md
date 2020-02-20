@@ -1,4 +1,4 @@
-# <p align="center"> jpl </p>
+# <p align="center"> jpl - JiggyPlaybookLinter </p>
 
 <p align="center">
 <a href="https://travis-ci.com/thejig/jpl"><img alt="Build Status" src="https://travis-ci.com/thejig/jpl.svg?branch=master"></a>
@@ -9,7 +9,7 @@
 
 ## Description
 Use Jiggy? Want to validate your playbook before deploying a pipeline?
-`jpl` or the `JiggyPipelineLinter` allows you to validate your JiggyPlaybook outside of an execution.
+`jpl` or the `JiggyPlaybookLinter` allows you to validate your JiggyPlaybook outside of an execution.
 
 
 ## Installation
