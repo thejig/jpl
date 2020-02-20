@@ -23,8 +23,10 @@ setup(
     python_requires=">=3.7",
     keywords="yaml lint linter",
     packages=find_packages(),
-    install_requires=[
-        "pytest",
-        "pyyaml"
-    ],
+    install_requires=["pytest", "pyyaml", "Click"],
+    entry_points=
+        """
+    [console_scripts]
+    jpl=jpl.cli.main_cli:lint
+        """,
 )
