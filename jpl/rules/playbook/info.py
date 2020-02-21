@@ -11,6 +11,7 @@ class PlayBookExists(JiggyRule):
     commands = ["command", "core"]
     mark = "PASSED"
     message = ""
+    task = None
 
     def exists(self, playbook: dict) -> str:
         if not playbook:
@@ -32,6 +33,7 @@ class PlaybookHasName(JiggyRule):
     commands = ["command", "core"]
     mark = "PASSED"
     message = ""
+    task = None
 
     def has_name(self, playbook: dict) -> str:
         if not playbook.get("name", "").strip():
@@ -53,6 +55,7 @@ class PlaybookHasAuthor(JiggyRule):
     commands = ["command", "core"]
     mark = "PASSED"
     message = ""
+    task = None
 
     def has_author(self, playbook: dict) -> str:
         if not playbook.get("author"):
@@ -74,6 +77,7 @@ class PlaybookHasDescription(JiggyRule):
     commands = ["command", "core"]
     mark = "PASSED"
     message = ""
+    task = None
 
     def has_desc(self, playbook: dict) -> str:
         if not playbook.get("description"):
@@ -95,6 +99,7 @@ class PlaybookHasVersion(JiggyRule):
     commands = ["command", "core"]
     mark = "PASSED"
     message = ""
+    task = None
 
     def has_version(self, playbook: dict) -> str:
         if not playbook.get("version"):

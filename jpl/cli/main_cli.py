@@ -11,21 +11,21 @@ MARK_TO_COLOR = {"PASSED": "green", "WARNING": "yellow", "FAILED": "red"}
 )
 @click.option(
     "-s",
-    "--skip",
+    "--show",
     required=False,
     is_flag=True,
     default=True,
-    help="Skip `PASSED` rules in jpl report",
+    help="Show `PASSED` rules in jpl report",
 )
 @click.option("-p", "--playbook", required=True, help="Filepath to Jiggy Playbook")
-def lint(verbose, skip, playbook):
+def lint(verbose, show, playbook):
     """Click CLI entrypoint to run JiggyPlaybookLint.
 
     CLI Args:
 
     -v --verbose: Run `jpl` with verbosity.
 
-    -s --skip: Skip "PASSED" rules in JiggyPlaybookLint Report.
+    -s --show: Show "PASSED" rules in JiggyPlaybookLint Report.
 
     -p --playbook: Location of JiggyPlaybook to lint.
 
@@ -43,7 +43,7 @@ def lint(verbose, skip, playbook):
 \/_____/iggy  \/_/laybook \/_____/inter            
         """
     )
-    linted = jpl.JiggyPlaybookLint(path=playbook, skip=skip).run()
+    linted = jpl.JiggyPlaybookLint(path=playbook, show=show).run()
 
     generate_jpl_report(linted=linted, verbose=verbose)
 
@@ -59,18 +59,18 @@ def generate_jpl_report(linted: list, verbose=None):  # pragma no cover
     Returns:
          click.echo - `with style`
     """
-    for mark, rule, task_name in linted:
+    for rule in linted:
         rule_meta = "[{}] {}:".format(rule.rule, rule.__class__.__name__)
-        if task_name:
+        if rule.task:
             rule_meta = "[{}] {} - {}:".format(
-                rule.rule, rule.__class__.__name__, task_name
+                rule.rule, rule.__class__.__name__, rule.task
             )
 
         if verbose == 1:
             click.echo(
                 "{:<50}{:<20} {}".format(
                     rule_meta,
-                    click.style(mark, fg=MARK_TO_COLOR.get(mark)),
+                    click.style(rule.mark, fg=MARK_TO_COLOR.get(rule.mark)),
                     rule.message,
                 )
             )
@@ -78,7 +78,7 @@ def generate_jpl_report(linted: list, verbose=None):  # pragma no cover
             click.echo(
                 "{:<50}{:<20} {} \nPriority: `{}` - Description: `{}`\n".format(
                     rule_meta,
-                    click.style(mark, fg=MARK_TO_COLOR.get(mark)),
+                    click.style(rule.mark, fg=MARK_TO_COLOR.get(rule.mark)),
                     rule.message,
                     rule.priority,
                     rule.description,
@@ -87,7 +87,7 @@ def generate_jpl_report(linted: list, verbose=None):  # pragma no cover
         else:
             click.echo(
                 "{:<50}{:<50}".format(
-                    rule_meta, click.style(mark, fg=MARK_TO_COLOR.get(mark))
+                    rule_meta, click.style(rule.mark, fg=MARK_TO_COLOR.get(rule.mark))
                 )
             )
 

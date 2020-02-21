@@ -31,6 +31,7 @@ class PipelineHasRunner(JiggyRule):
     commands = ["command", "core"]
     mark = "PASSED"
     message = ""
+    task = None
 
     def validate_runner(self, playbook: dict) -> str:
         pipeline = playbook.get("pipeline", {})
@@ -54,6 +55,7 @@ class RunnerIsSupported(JiggyRule):
     commands = ["command", "core"]
     mark = "PASSED"
     message = ""
+    task = None
 
     def validate_runner_supported(self, playbook: dict) -> str:
         pipeline = playbook.get("pipeline", {})
@@ -78,6 +80,7 @@ class SecretsHasMetadata(JiggyRule):
     commands = ["command", "core"]
     mark = "PASSED"
     message = ""
+    task = None
 
     def validate_secrets(self, playbook: dict) -> str:
         """Check `secrets` metadata if exists for mandatory fields."""
@@ -110,6 +113,7 @@ class SecretsLocationExists(JiggyRule):
     commands = ["command", "core"]
     mark = "PASSED"
     message = ""
+    task = None
 
     def validate_secrets_exists(self, playbook: dict) -> str:
         """Check `secrets.location` exists."""
@@ -140,6 +144,7 @@ class PipelineHasTasks(JiggyRule):
     commands = ["command", "core"]
     mark = "PASSED"
     message = ""
+    task = None
 
     def validate_pipeline_has_tasks(self, playbook: dict) -> str:
         """Check `JiggyPlaybook.pipeline.tasks` exists."""

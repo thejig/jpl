@@ -5,6 +5,7 @@ from importlib import import_module
 
 
 def file_exists(filepath: str):
+    """Validate the existence of a filepath."""
     return os.path.exists(filepath)
 
 

@@ -40,7 +40,7 @@ Usage: jpl [OPTIONS]
 
   CLI Args:
   -v --verbose: Run `jpl` with verbosity.
-  -s --skip: Skip "PASSED" rules in JiggyPlaybookLint Report.
+  -s --show: Show "PASSED" rules in JiggyPlaybookLint Report.
   -p --playbook: Location of JiggyPlaybook to lint.
 
   Returns:
@@ -49,7 +49,7 @@ Usage: jpl [OPTIONS]
 
 Options:
   -v, --verbose        Run `jpl` with verbosity.
-  -s, --skip           Skip `PASSED` rules in jpl report
+  -s, --show           Show `PASSED` rules in jpl report
   -p, --playbook TEXT  Filepath to Jiggy Playbook  [required]
   --help               Show this message and exit.
 ```
@@ -67,22 +67,19 @@ $ jpl -v -p examples/jiggy-playbook.yml
 
 ```
 
-Via python client
+Via python client with `.validate()`
 ```python
 import jpl
 
 >>> client = jpl.JiggyPlaybookLint(path="path/to/playbook")
->>> client.run()
+>>> result = client.validate()
 ```
 
-```bash
-   __        ______      __
-  /\ \      /\  == \    /\ \
- _\_\ \     \ \  _-/    \ \ \____
-/\_____\     \ \_\       \ \_____\
-\/_____/iggy  \/_/laybook \/_____/inter
+The `validate()` method will return a `tuple`
 
-[F01] FunctionSourceExists - get-weekday:         FAILED      Declared path to function: `examples.utils.dates.GetWeekdayTask` does not exist.
+The tuple denotes the validity of the playbook and the failing rules as `JiggyRule` objects
+```bash
+(False, [<JiggyRule: F01>, <JiggyRule: F01>, <JiggyRule: F01>, <JiggyRule: F01>, <JiggyRule: F01>, <JiggyRule: F01>])
 ```
 
 ## Overview
