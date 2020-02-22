@@ -5,7 +5,7 @@ from jpl.rules.task.function import (
     FunctionSourceExists,
     ParamHasType,
     ParamHasValue,
-    FunctionOutputIsSingular
+    FunctionOutputObject
 )
 
 from tests.test_utils import load_from_json
@@ -104,7 +104,7 @@ def test_param_has_value(task, expected):
     ]
 )
 def test_output_is_singular(task, expected):
-    rule = FunctionOutputIsSingular()
+    rule = FunctionOutputObject()
     result = rule.run(
         playbook=task
     )

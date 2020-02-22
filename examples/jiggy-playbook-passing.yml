@@ -1,0 +1,21 @@
+name: Eureka
+author: xyz@jiggy.dev
+description: This is a passing JiggyPlaybook
+version: 0.0.1
+
+pipeline:
+  runner: sequential
+  secrets:
+    location: ../examples/secrets/.env-example
+    source: jiggy.EnvSecrets
+  tasks:
+
+  - name: print-somethin
+    description: Print something
+    function:
+      source: jpl.rules.pipeline.pipeline.PipelineHasRunner
+      params:
+      - type: str
+        value: 'THIS PIPELINE IS BONKERS'
+      output: null
+    requires: null
