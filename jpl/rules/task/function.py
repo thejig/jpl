@@ -13,8 +13,10 @@ class FunctionSourceExists(JiggyRule):
     commands = ["command", "core"]
     mark = "PASSED"
     message = ""
+    task = None
 
     def function_exists(self, task: dict) -> str:
+        self.task = task.get("name")
         this_func = task.get("function", {})
         function_loc = this_func.get("source")
         if function_loc:
@@ -46,9 +48,11 @@ class ParamHasType(JiggyRule):
     commands = ["command", "core"]
     mark = "PASSED"
     message = ""
+    task = None
 
     def param_has_attr_type(self, task: dict) -> str:
         """Validate functino.params has `type` if exists."""
+        self.task = task.get("name")
         this_func = task.get("function", {})
         params = this_func.get("params", [])
         if params:
@@ -76,9 +80,11 @@ class ParamHasValue(JiggyRule):
     commands = ["command", "core"]
     mark = "PASSED"
     message = ""
+    task = None
 
     def param_has_attr_value(self, task: dict) -> str:
         """Validate functino.params has `value` if exists."""
+        self.task = task.get("name")
         this_func = task.get("function", {})
         params = this_func.get("params", [])
         if params:
@@ -106,9 +112,11 @@ class FunctionOutputIsSingular(JiggyRule):
     commands = ["command", "core"]
     mark = "PASSED"
     message = ""
+    task = None
 
     def validate_func_has_value(self, task: dict) -> str:
         """Validate functino.params has type and value if exists."""
+        self.task = task.get("name")
         this_func = task.get("function", {})
         output = this_func.get("output")
         if output:

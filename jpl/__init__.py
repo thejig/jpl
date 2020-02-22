@@ -7,36 +7,55 @@ from jpl.rules import PlayBookExists, rules, task_rules
 class JiggyPlaybookLint(object):  # pragma no cover
     """Runner for jpl."""
 
-    def __init__(self, path: str, skip=None):
+    def __init__(self, path: str, allow_warning=False, show=None):
         self.playbook = self._read(path)
-        self.skip = skip
+        self.aw = allow_warning
+        self.show = show
+        self.exe = ["PASSED"]
 
     def run(self):
         """Runner for JiggyPlaybookLinter."""
-        pbe = PlayBookExists()
-        exists = pbe.run(self.playbook)
-        if exists == "FAILED":
-            return [(exists, pbe, None)]
+        playbook_exists = PlayBookExists()
+        playbook_exists.run(self.playbook)
+        if playbook_exists.mark == "FAILED":
+            return [playbook_exists]
 
-        linted = []
+        jiggy_response = []
         for rule in rules:
             init_rule = rule()
+            init_rule.run(playbook=self.playbook)
 
-            _status = init_rule.run(playbook=self.playbook)
-
-            linted.append((_status, init_rule, None))
+            jiggy_response.append(init_rule)
 
         for task in self.playbook.get("pipeline", {}).get("tasks"):
             for rule in task_rules:
                 init_rule = rule()
+                init_rule.run(playbook=task)
 
-                _status = init_rule.run(playbook=task)
-                linted.append((_status, init_rule, task.get("name")))
+                jiggy_response.append(init_rule)
 
-        if self.skip:
-            linted = [rule for rule in linted if rule[0] != "PASSED"]
+        if self.show:
+            jiggy_response = [rule for rule in jiggy_response if rule.mark != "PASSED"]
 
-        return linted
+        return jiggy_response
+
+    def validate(self) -> tuple:
+        """
+        Executor for in runtime JiggyPlaybookLint validation and response structure
+
+        Returns:
+            (tuple) - (is_valid, failures)
+                is_valid = bool
+                failures = list [JiggyRule] with mark FAILED
+        """
+        response = self.run()
+
+        if self.aw:
+            self.exe = self.exe.append("WARNING")
+
+        prevent = list(filter(lambda rule: rule.mark not in self.exe, response))
+
+        return (prevent is None, prevent)
 
     @staticmethod
     def _read(path: str):  # pragma no cover

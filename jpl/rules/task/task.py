@@ -11,8 +11,10 @@ class TaskHasName(JiggyRule):
     commands = ["command", "core"]
     mark = "PASSED"
     message = ""
+    task = None
 
     def has_name(self, task):
+        self.task = task.get("name")
         if not task.get("name"):
             self.mark = "FAILED"
             self.message = "Task `name` has not been declared."
@@ -32,8 +34,10 @@ class TaskHasDescription(JiggyRule):
     commands = ["command", "core"]
     mark = "PASSED"
     message = ""
+    task = None
 
     def has_desc(self, task):
+        self.task = task.get("name")
         if not task.get("description"):
             self.mark = "WARNING"
             self.message = "Task `description` has not been declared."
@@ -53,8 +57,10 @@ class TaskHasFunction(JiggyRule):
     commands = ["command", "core"]
     mark = "PASSED"
     message = ""
+    task = None
 
     def has_function(self, task):
+        self.task = task.get("name")
         if not task.get("function"):
             self.mark = "FAILED"
             self.message = "Task `function` has not been declared."
