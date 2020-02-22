@@ -73,7 +73,9 @@ def generate_jpl_report(
         if show and rule.mark == "PASSED":
             continue
 
-        passing = False
+        if rule.mark != "PASSED":
+            passing = False
+
         resp = "{:<50}{:<30}".format(
             rule_meta,
             click.style(rule.mark, bold=True, fg=config.MARK_TO_COLOR.get(rule.mark)),
@@ -88,6 +90,12 @@ def generate_jpl_report(
         click.echo(
             click.style(
                 "All checks passed - Time to get jiggy wit' it!", fg="green"
+            )
+        )
+    else:
+        click.echo(
+            click.style(
+                "Uh oh! - It seems there might be errors in your playbook!", fg="red"
             )
         )
 
