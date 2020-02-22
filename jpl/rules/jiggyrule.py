@@ -20,7 +20,7 @@ rule.rule = P (pipeline) 0 (base 10) 1 (rule number 1)
 """
 
 
-class JiggyRule(object):
+class JiggyRule(object):  # pragma no cover
     """Base class for JiggyRule."""
 
     rule = ""
