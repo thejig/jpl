@@ -1,9 +1,5 @@
 PWD := $(shell pwd)
 
-.PHONY: black
-black:
-	tox -e black
-
 .PHONY: tests
 tests:
 	tox
