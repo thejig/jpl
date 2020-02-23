@@ -2,7 +2,7 @@
 import click
 import jpl
 
-MARK_TO_COLOR = {"PASSED": "green", "WARNING": "yellow", "FAILED": "red"}
+import jpl.cli.config as config
 
 
 @click.command()
@@ -18,7 +18,7 @@ MARK_TO_COLOR = {"PASSED": "green", "WARNING": "yellow", "FAILED": "red"}
     help="Show `PASSED` rules in jpl report",
 )
 @click.option("-p", "--playbook", required=True, help="Filepath to Jiggy Playbook")
-def lint(verbose, show, playbook):
+def lint(verbose, show, playbook):  # pragma no cover
     """Click CLI entrypoint to run JiggyPlaybookLint.
 
     CLI Args:
@@ -43,18 +43,22 @@ def lint(verbose, show, playbook):
 \/_____/iggy  \/_/laybook \/_____/inter            
         """
     )
-    linted = jpl.JiggyPlaybookLint(path=playbook, show=show).run()
 
-    generate_jpl_report(linted=linted, verbose=verbose)
+    linted = jpl.JiggyPlaybookLint(path=playbook).run()
+    generate_jpl_report(linted=linted, show=show, verbose=verbose)
 
 
-def generate_jpl_report(linted: list, verbose=None):  # pragma no cover
+def generate_jpl_report(
+        linted: list, show: bool, verbose=None, passing=True
+):  # pragma no cover
     """
     Generate `Click` response for jpl linter.
 
     Args:
         linted: (list) - array of JiggyRule response objects
+        show: (bool) - boolean flag to show "PASSED" rules in CLI
         verbose: (count) - flag to denote response with verbosity
+        passing: (bool) - indicator for CLI success message
 
     Returns:
          click.echo - `with style`
@@ -66,29 +70,33 @@ def generate_jpl_report(linted: list, verbose=None):  # pragma no cover
                 rule.rule, rule.__class__.__name__, rule.task
             )
 
-        if verbose == 1:
-            click.echo(
-                "{:<50}{:<20} {}".format(
-                    rule_meta,
-                    click.style(rule.mark, fg=MARK_TO_COLOR.get(rule.mark)),
-                    rule.message,
-                )
+        if show and rule.mark == "PASSED":
+            continue
+
+        if rule.mark != "PASSED":
+            passing = False
+
+        resp = "{:<50}{:<30}".format(
+            rule_meta,
+            click.style(rule.mark, bold=True, fg=config.MARK_TO_COLOR.get(rule.mark)),
+        )
+
+        if verbose:
+            resp = "{} {}".format(resp, rule.message)
+
+        click.echo(resp)
+
+    if passing:
+        click.echo(
+            click.style(
+                "All checks passed - Time to get jiggy wit' it!", fg="green"
             )
-        elif verbose > 1:
-            click.echo(
-                "{:<50}{:<20} {} \nPriority: `{}` - Description: `{}`\n".format(
-                    rule_meta,
-                    click.style(rule.mark, fg=MARK_TO_COLOR.get(rule.mark)),
-                    rule.message,
-                    rule.priority,
-                    rule.description,
-                )
+        )
+    else:
+        click.echo(
+            click.style(
+                "Uh oh! - It seems there might be errors in your playbook!", fg="red"
             )
-        else:
-            click.echo(
-                "{:<50}{:<50}".format(
-                    rule_meta, click.style(rule.mark, fg=MARK_TO_COLOR.get(rule.mark))
-                )
-            )
+        )
 
     return exit()

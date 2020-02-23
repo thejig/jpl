@@ -103,11 +103,11 @@ class ParamHasValue(JiggyRule):
         return self.param_has_attr_value(playbook)
 
 
-class FunctionOutputIsSingular(JiggyRule):
+class FunctionOutputObject(JiggyRule):
     """Validate task.function.prams has `type` and `value`"""
 
     rule = "F04"
-    description = "Validate `JiggyPlaybook.pipeline.task.function.output` is singular."
+    description = "Validate `JiggyPlaybook.pipeline.task.function.output` structure."
     priority = "high"
     commands = ["command", "core"]
     mark = "PASSED"
@@ -138,5 +138,5 @@ rules = [
     FunctionSourceExists,
     ParamHasType,
     ParamHasValue,
-    FunctionOutputIsSingular,
+    FunctionOutputObject,
 ]

@@ -7,10 +7,9 @@ from jpl.rules import PlayBookExists, rules, task_rules
 class JiggyPlaybookLint(object):  # pragma no cover
     """Runner for jpl."""
 
-    def __init__(self, path: str, allow_warning=False, show=None):
+    def __init__(self, path: str, allow_warning=False):
         self.playbook = self._read(path)
         self.aw = allow_warning
-        self.show = show
         self.exe = ["PASSED"]
 
     def run(self):
@@ -34,9 +33,6 @@ class JiggyPlaybookLint(object):  # pragma no cover
 
                 jiggy_response.append(init_rule)
 
-        if self.show:
-            jiggy_response = [rule for rule in jiggy_response if rule.mark != "PASSED"]
-
         return jiggy_response
 
     def validate(self) -> tuple:
@@ -55,7 +51,7 @@ class JiggyPlaybookLint(object):  # pragma no cover
 
         prevent = list(filter(lambda rule: rule.mark not in self.exe, response))
 
-        return (prevent is None, prevent)
+        return bool(not prevent), prevent
 
     @staticmethod
     def _read(path: str):  # pragma no cover

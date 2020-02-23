@@ -4,7 +4,7 @@ import sys
 import jpl
 
 
-def main():
+def main():  # pragma no cover
     """Entrypoint to the `jpl` main command."""
 
     if sys.path[0] == "" or sys.path[0] == os.getcwd():
