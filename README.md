@@ -40,7 +40,7 @@ Usage: jpl [OPTIONS]
 
   CLI Args:
   -v --verbose: Run `jpl` with verbosity.
-  -s --show: Show "PASSED" rules in JiggyPlaybookLint Report.
+  -s --skip: Skip "PASSED" rules in JiggyPlaybookLint Report.
   -p --playbook: Location of JiggyPlaybook to lint.
 
   Returns:
@@ -49,7 +49,7 @@ Usage: jpl [OPTIONS]
 
 Options:
   -v, --verbose        Run `jpl` with verbosity.
-  -s, --show           Show `PASSED` rules in jpl report
+  -s, --skip           Skip `PASSED` rules in jpl report
   -p, --playbook TEXT  Filepath to Jiggy Playbook  [required]
   --help               Show this message and exit.
 ```
