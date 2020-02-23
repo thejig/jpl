@@ -18,3 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 - Removed `src` and replaced with `jpl`
+
+
+## [0.0.2] - 2020-02-23
+### Added
+- `__init__.py` for utils
+
+### Changed
+- Bump version to `0.0.2`
