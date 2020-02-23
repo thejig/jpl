@@ -4,13 +4,14 @@ from setuptools import setup, find_packages
 from io import open
 
 this_directory = path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
+with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
     name="jpl",
     version="0.0.1",
     description="Jiggy Playbook Linter",
+    long_description_content_type='text/markdown',
     long_description=long_description,
     url="https://github.com/thejig/jpl",
     author="Mitchell Bregman, Leon Kozlowski",
