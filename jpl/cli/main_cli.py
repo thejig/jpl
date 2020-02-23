@@ -11,21 +11,21 @@ import jpl.cli.config as config
 )
 @click.option(
     "-s",
-    "--show",
+    "--skip",
     required=False,
     is_flag=True,
-    default=True,
-    help="Show `PASSED` rules in jpl report",
+    default=False,
+    help="Skip `PASSED` rules in jpl-cli report",
 )
 @click.option("-p", "--playbook", required=True, help="Filepath to Jiggy Playbook")
-def lint(verbose, show, playbook):  # pragma no cover
+def lint(verbose, skip, playbook):  # pragma no cover
     """Click CLI entrypoint to run JiggyPlaybookLint.
 
     CLI Args:
 
     -v --verbose: Run `jpl` with verbosity.
 
-    -s --show: Show "PASSED" rules in JiggyPlaybookLint Report.
+    -s --skip: Skip "PASSED" rules in JiggyPlaybookLint Report.
 
     -p --playbook: Location of JiggyPlaybook to lint.
 
@@ -45,18 +45,18 @@ def lint(verbose, show, playbook):  # pragma no cover
     )
 
     linted = jpl.JiggyPlaybookLint(path=playbook).run()
-    generate_jpl_report(linted=linted, show=show, verbose=verbose)
+    generate_jpl_report(linted=linted, skip=skip, verbose=verbose)
 
 
 def generate_jpl_report(
-        linted: list, show: bool, verbose=None, passing=True
+    linted: list, skip: bool, verbose=None, passing=True
 ):  # pragma no cover
     """
     Generate `Click` response for jpl linter.
 
     Args:
         linted: (list) - array of JiggyRule response objects
-        show: (bool) - boolean flag to show "PASSED" rules in CLI
+        skip: (bool) - boolean flag to show "PASSED" rules in CLI
         verbose: (count) - flag to denote response with verbosity
         passing: (bool) - indicator for CLI success message
 
@@ -70,7 +70,7 @@ def generate_jpl_report(
                 rule.rule, rule.__class__.__name__, rule.task
             )
 
-        if show and rule.mark == "PASSED":
+        if skip and rule.mark == "PASSED":
             continue
 
         if rule.mark != "PASSED":
