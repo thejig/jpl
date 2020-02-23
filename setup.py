@@ -3,13 +3,15 @@ from os import path
 from setuptools import setup, find_packages
 from io import open
 
+from version import __version__
+
 this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
     name="jpl",
-    version="0.0.3",
+    version=__version__,
     description="Jiggy Playbook Linter",
     long_description_content_type='text/markdown',
     long_description=long_description,
