@@ -18,7 +18,7 @@ master_doc = 'index'
 
 # -- Project information -----------------------------------------------------
 
-project = 'JiggyPlaybookLinter'
+project = 'jpl'
 copyright = '2020, Leon Kozlowski, Mitchell Bregman'
 author = 'Leon Kozlowski, Mitchell Bregman'
 
